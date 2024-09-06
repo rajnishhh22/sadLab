@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Registration Form</h1>
+
+<form id="registrationForm">
+    <div class="form-group">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" name="userId">
+        <span class="error" id="userIdError">Required and must be of length 5 to 12.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <span class="error" id="passwordError">Required and must be of length 7 to 12.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+        <span class="error" id="nameError">Required. Alphabets only.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="address">Address:</label>
+        <input type="text" id="address" name="address">
+        <span class="error" id="addressError" style="display:none;">Optional.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+            <option value="">Please select a country</option>
+            <option value="US">United States</option>
+            <option value="CA">Canada</option>
+            <!-- Add more countries as needed -->
+        </select>
+        <span class="error" id="countryError">Required. Must select a country.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="zip">ZIP Code:</label>
+        <input type="text" id="zip" name="zip">
+        <span class="error" id="zipError">Required. Must be numeric only.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email">
+        <span class="error" id="emailError">Required. Must be a valid email.</span>
+    </div>
+
+    <div class="form-group">
+        <label>Sex:</label>
+        <input type="radio" id="male" name="sex" value="Male"> Male
+        <input type="radio" id="female" name="sex" value="Female"> Female
+        <span class="error" id="sexError">Required.</span>
+    </div>
+
+    <div class="form-group">
+        <label>Language:</label>
+        <input type="checkbox" id="english" name="language" value="English"> English
+        <input type="checkbox" id="nonEnglish" name="language" value="NonEnglish"> Non-English
+        <span class="error" id="languageError">Required.</span>
+    </div>
+
+    <div class="form-group">
+        <label for="about">About:</label>
+        <textarea id="about" name="about"></textarea>
+        <span class="error" id="aboutError" style="display:none;">Optional.</span>
+    </div>
+
+    <button type="submit">Submit</button>
+</form>
+
+<script>
+    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        let isValid = true;
+
+        // Validate User ID
+        const userId = document.getElementById('userId').value;
+        if (userId.length < 5 || userId.length > 12) {
+            document.getElementById('userIdError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('userIdError').style.display = 'none';
+        }
+
+        // Validate Password
+        const password = document.getElementById('password').value;
+        if (password.length < 7 || password.length > 12) {
+            document.getElementById('passwordError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('passwordError').style.display = 'none';
+        }
+
+        // Validate Name
+        const name = document.getElementById('name').value;
+        if (!/^[A-Za-z]+$/.test(name)) {
+            document.getElementById('nameError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('nameError').style.display = 'none';
+        }
+
+        // Validate Country
+        const country = document.getElementById('country').value;
+        if (country === '') {
+            document.getElementById('countryError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('countryError').style.display = 'none';
+        }
+
+        // Validate ZIP Code
+        const zip = document.getElementById('zip').value;
+        if (!/^\d+$/.test(zip)) {
+            document.getElementById('zipError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('zipError').style.display = 'none';
+        }
+
+        // Validate Email
+        const email = document.getElementById('email').value;
+        const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+        if (!emailPattern.test(email)) {
+            document.getElementById('emailError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('emailError').style.display = 'none';
+        }
+
+        // Validate Sex
+        const maleChecked = document.getElementById('male').checked;
+        const femaleChecked = document.getElementById('female').checked;
+        if (!maleChecked && !femaleChecked) {
+            document.getElementById('sexError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('sexError').style.display = 'none';
+        }
+
+        // Validate Language
+        const englishChecked = document.getElementById('english').checked;
+        const nonEnglishChecked = document.getElementById('nonEnglish').checked;
+        if (!englishChecked && !nonEnglishChecked) {
+            document.getElementById('languageError').style.display = 'inline';
+            isValid = false;
+        } else {
+            document.getElementById('languageError').style.display = 'none';
+        }
+
+        if (isValid) {
+            alert('Form submitted successfully!');
+            // Add further logic to handle form submission, such as sending data to a server
+        }
+    });
+</script>
+
+</body>
+</html>
